@@ -16,11 +16,14 @@ description='''${mod_description}'''
 [[mixins]]
 config="survivaltweaks.mixins.json"
 
+# ordering AFTER: our data must load after NeoForge's, because NeoForge ships its
+# own copy of some vanilla files we also replace (e.g. the enchanting table recipe)
+# and the mod that loads last wins.
 [[dependencies.${mod_id}]]
     modId="neoforge"
     type="required"
     versionRange="[${neo_version},)"
-    ordering="NONE"
+    ordering="AFTER"
     side="BOTH"
 
 [[dependencies.${mod_id}]]

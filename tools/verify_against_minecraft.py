@@ -22,7 +22,9 @@ longer exists or changed shape - fix it before release (MAINTAINING.md explains
 each feature). WARN = worth a look. With --fix, files that are copies of vanilla
 (structure sets, Hired Help advancement) are regenerated from the jar.
 
-Pass any number of jars; a file is looked up in them in order.
+Pass any number of jars; a file is looked up in them in order (pass the NeoForge
+jar FIRST: NeoForge replaces some vanilla data files, and those are what the
+game actually uses).
 """
 import json
 import os
@@ -694,6 +696,27 @@ def check_loot(jar):
         report("OK" if ok else "WARN", f"vanilla loot table {t} " + ("exists" if ok else "MISSING - no bonus loot there"))
 
 
+def check_neoforge_overrides(jar):
+    """NeoForge ships its own copies of some vanilla data files (e.g. recipes using
+    c: tags). If we replace one of those too, our mod must load AFTER NeoForge."""
+    print("\n== Files NeoForge also replaces ==")
+    toml = open(os.path.join(MOD, "templates", "META-INF", "neoforge.mods.toml")).read()
+    after = any('modId="neoforge"' in block and 'ordering="AFTER"' in block
+                for block in toml.split("[[dependencies"))
+    overlap = []
+    neo = jar.zips[0]
+    neo_names = set(neo.namelist())
+    for root, _, files in os.walk(os.path.join(MOD_DATA, "minecraft")):
+        for f in files:
+            rel = "data/" + os.path.relpath(os.path.join(root, f), MOD_DATA).replace("\\", "/")
+            if rel in neo_names:
+                overlap.append(rel)
+    for rel in overlap:
+        report("OK" if after else "FAIL", f"{rel} is also replaced by NeoForge - needs ordering=\"AFTER\" on the neoforge dependency")
+    if not overlap:
+        report("OK", "no data file is also replaced by NeoForge")
+
+
 def check_misc(jar):
     print("\n== Entities, gamerules, sprites, enchantments ==")
     strings = set()
@@ -732,6 +755,7 @@ def main():
     check_structure_sets(jar, fix)
     check_recipes(jar)
     check_loot(jar)
+    check_neoforge_overrides(jar)
     check_misc(jar)
     print(f"\nSummary: {results['OK']} OK, {results['WARN']} WARN, {results['FAIL']} FAIL")
     sys.exit(1 if results["FAIL"] else 0)

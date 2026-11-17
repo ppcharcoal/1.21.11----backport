@@ -27,7 +27,14 @@ ModDevGradle creates (Mojang names + the game's data files):
     ... add --fix to re-generate the files that are copies of vanilla
 
 Fix every FAIL before building; read every WARN. With NeoForge 21.11.48 it
-reports 118 OK / 0 WARN / 0 FAIL.
+reports 133 OK / 0 WARN / 0 FAIL. Pass the NeoForge jar FIRST: NeoForge ships
+its own copies of some vanilla data files, and those are what the game uses.
+
+There are also **in-game tests** (`src/gametest`, a separate test mod that is not
+in the release jar): `./gradlew runGameTestServer` starts a server, runs ~20
+tests with a real (fake-connection) survival player - totems, keep inventory,
+anvil, beds, hunger, Unbreaking, effects on mobs, recipes, advancements, cats -
+and fails if any test fails. GitHub runs them on every push.
 
 ## 1. Design rules (keep following these!)
 
@@ -50,6 +57,12 @@ reports 118 OK / 0 WARN / 0 FAIL.
    that a world opens after touching them.
 4. **One thing per file** where a rename could break it (see gamerules below).
 5. **Never rename saved IDs** (section 4). Existing worlds depend on them.
+6. **Load after NeoForge.** NeoForge replaces some vanilla data files itself (for
+   example the enchanting table recipe, to accept `c:` tags). When two mods
+   replace the same file, the one loaded last wins, so `neoforge.mods.toml` has
+   `ordering="AFTER"` on the neoforge dependency. The checker FAILs if a file we
+   replace is also replaced by NeoForge and that ordering is missing. (The 1.10.0
+   test run caught exactly this: the enchanting table was still craftable.)
 
 ---
 
