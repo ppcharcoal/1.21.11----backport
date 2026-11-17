@@ -282,8 +282,13 @@ public final class SurvivalTweaksGameTests {
     private static void betaHunger(GameTestHelper helper) {
         ServerPlayer p = player(helper);
         p.setHealth(4f);
-        p.getFoodData().eat(5, 0.6f); // bread: 5 food, 6.0 saturation
-        helper.runAfterDelay(3, () -> {
+        // A brand-new player starts with 5 saturation (vanilla) - let the mod use that
+        // up first, then "eat bread": 5 food, 6.0 saturation -> 6 HP of Regeneration II.
+        helper.runAfterDelay(2, () -> {
+            p.removeEffect(MobEffects.REGENERATION);
+            p.getFoodData().eat(5, 0.6f);
+        });
+        helper.runAfterDelay(5, () -> {
             check(helper, p.getFoodData().getFoodLevel() == 17, "food level not pinned at 17: " + p.getFoodData().getFoodLevel());
             check(helper, p.getFoodData().getSaturationLevel() == 0f, "saturation not reset");
             MobEffectInstance regen = p.getEffect(MobEffects.REGENERATION);
@@ -428,8 +433,10 @@ public final class SurvivalTweaksGameTests {
     private static void recipes(GameTestHelper helper) {
         check(helper, recipe(helper, "survivaltweaks:totem_of_undying") != null, "totem recipe missing");
         check(helper, recipe(helper, "survivaltweaks:leather_from_smoking") != null, "leather smoking recipe missing");
-        check(helper, recipe(helper, "minecraft:enchanting_table") instanceof ShapelessRecipe, "enchanting table recipe not replaced");
-        check(helper, recipe(helper, "minecraft:fletching_table") instanceof ShapelessRecipe, "fletching table recipe not replaced");
+        for (String id : List.of("minecraft:enchanting_table", "minecraft:fletching_table")) {
+            Recipe<?> r = recipe(helper, id);
+            check(helper, r instanceof ShapelessRecipe, id + " recipe not replaced: " + (r == null ? "missing" : r.getClass().getName()));
+        }
         helper.succeed();
     }
 
