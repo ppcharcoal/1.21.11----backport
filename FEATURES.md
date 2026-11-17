@@ -4,8 +4,8 @@
 > illagers are gone, Beta-style hunger and healing return, and loot gets better
 > the deeper you go.
 
-Fabric mod for Minecraft 26.3 · requires Fabric API · install on **both client
-and server** (singleplayer: just the client).
+NeoForge mod for Minecraft 1.21.11 (backport of the Fabric edition for 26.3) ·
+install on **both client and server** (singleplayer: just the client).
 
 ---
 
@@ -25,7 +25,7 @@ and server** (singleplayer: just the client).
 
 **Exceptions**
 - Mobs you spawn on purpose (`/summon`, spawn eggs, dispensers) are always
-  allowed.
+  allowed. (A `/summon` with extra NBT data counts as a natural spawn.)
 - Bosses (Wither, Ender Dragon) are never affected by spawn rules — the Wither
   can be built anywhere, any time.
 - Rules only apply to newly appearing mobs; existing mobs are left alone.
@@ -42,8 +42,8 @@ and server** (singleplayer: just the client).
 - Villages, pillager outposts, woodland mansions, swamp huts
 
 **No maps to removed structures**
-- The woodland mansion explorer map is removed from campsite secret chests
-  (new in 26.3); no loot anywhere leads to a removed structure.
+- No chest loot leads to a removed structure (the only source of such maps,
+  cartographer villagers, never spawns).
 
 **Mechanics turned off**
 - Pillager patrols, wandering trader visits, raids
@@ -223,13 +223,14 @@ Everything else stays obtainable — including the mace and ominous trials
 
 ## 10. Technical
 
-- Built on Fabric API events and data files. The few small mixins (anvil cost,
-  potion effects, keep inventory) are optional: if a future Minecraft update breaks one, only
-  that feature switches back to vanilla; the game still starts.
+- Built on NeoForge events and data files. The few small mixins (anvil cost,
+  potion effects, keep inventory, beds, Unbreaking) are optional: if a future
+  update breaks one, only that feature switches back to vanilla; the game still
+  starts.
 - Items kept on death are saved with the player until respawn.
 - The dragon-killed state is saved in plain text at
-  `<world>/data/survivaltweaks/world_state.properties`, readable by any future
-  version of the mod.
+  `<world>/data/survivaltweaks/world_state.properties` - the same file the
+  Fabric edition uses.
 - Ships with `MAINTAINING.md` (how everything works and how to update it) and
-  `tools/verify_against_minecraft.py`, which checks all of the mod against any
-  Minecraft version's jar before updating.
+  `tools/verify_against_minecraft.py`, which checks all of the mod against the
+  Minecraft + NeoForge jars before updating.

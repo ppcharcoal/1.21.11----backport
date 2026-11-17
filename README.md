@@ -2,18 +2,23 @@
   <img src="src/main/resources/assets/survivaltweaks/icon.png" alt="Survival Tweaks icon" width="128" height="128">
 </p>
 
-<h1 align="center">Survival Tweaks</h1>
+<h1 align="center">Survival Tweaks — NeoForge 1.21.11</h1>
 
 <p align="center">
-  A harder, more rewarding survival for <b>Minecraft 26.3</b> (Fabric).<br>
+  A harder, more rewarding survival for <b>Minecraft 1.21.11</b> (NeoForge).<br>
   Monsters lurk in caves, villagers and illagers are gone, Beta-style hunger and
   healing return, and loot gets better the deeper you go.
 </p>
 
 <p align="center">
-  <a href="https://github.com/ppcharcoal/survivaltweaks/actions/workflows/build.yml"><img src="https://github.com/ppcharcoal/survivaltweaks/actions/workflows/build.yml/badge.svg" alt="Build"></a>
-  <a href="https://github.com/ppcharcoal/survivaltweaks/releases/latest"><img src="https://img.shields.io/github/v/release/ppcharcoal/survivaltweaks" alt="Latest release"></a>
+  <a href="https://github.com/ppcharcoal/1.21.11----backport/actions/workflows/build.yml"><img src="https://github.com/ppcharcoal/1.21.11----backport/actions/workflows/build.yml/badge.svg" alt="Build"></a>
+  <a href="https://github.com/ppcharcoal/1.21.11----backport/releases/latest"><img src="https://img.shields.io/github/v/release/ppcharcoal/1.21.11----backport" alt="Latest release"></a>
 </p>
+
+> This is the **NeoForge backport for Minecraft 1.21.11**. The main version of the
+> mod is the Fabric edition for Minecraft 26.x:
+> [ppcharcoal/survivaltweaks](https://github.com/ppcharcoal/survivaltweaks).
+> Both have the same features.
 
 ## Highlights
 
@@ -53,14 +58,14 @@ The complete list of every change is in **[FEATURES.md](FEATURES.md)**.
 
 ## Installation
 
-1. Install [Fabric Loader](https://fabricmc.net/use/) **0.19.5 or newer** for
-   Minecraft **26.3**.
-2. Download [Fabric API](https://modrinth.com/mod/fabric-api) for 26.3.
-3. Download `survivaltweaks-<version>.jar` from the
-   [latest release](https://github.com/ppcharcoal/survivaltweaks/releases/latest).
-4. Put both jars in your `.minecraft/mods` folder.
+1. Install [NeoForge](https://neoforged.net/) **21.11.48 or newer** for
+   Minecraft **1.21.11**.
+2. Download `survivaltweaks-neoforge-1.21.11-<version>.jar` from the
+   [latest release](https://github.com/ppcharcoal/1.21.11----backport/releases/latest).
+3. Put it in your `.minecraft/mods` folder (or your launcher instance's `mods`
+   folder). No other mods are needed.
 
-Requires **Java 25**, which the official launcher already provides.
+Requires **Java 21**, which the official launcher already provides for 1.21.11.
 
 **Multiplayer:** install the mod on the server **and** on every client. Item
 changes such as stack sizes and the HUD need it on both sides.
@@ -78,47 +83,48 @@ Back up your world before adding or removing any gameplay mod.
 
 ## Compatibility
 
-- Built for Minecraft 26.3 only. Other versions are untested.
-- Most features use Fabric API events and data packs, so they should play
+- Built for Minecraft 1.21.11 with NeoForge only. Other versions are untested.
+- Most features use NeoForge events and data packs, so they should play
   nicely with other mods.
 - A few features use small optional mixins: anvil costs, potion effects on all
-  mobs, and keep inventory. If another mod conflicts with one of them, only
-  that feature falls back to vanilla. The game still starts.
+  mobs, keep inventory, beds and the Unbreaking rule. If another mod conflicts
+  with one of them, only that feature falls back to vanilla. The game still
+  starts.
 - Mods that change hunger, the HUD, mob spawning or structure loot may overlap
   with this one.
 
 ## Building from source
 
 ```sh
-git clone https://github.com/ppcharcoal/survivaltweaks
-cd survivaltweaks
+git clone https://github.com/ppcharcoal/1.21.11----backport
+cd 1.21.11----backport
 ./gradlew build        # Windows: gradlew.bat build
 ```
 
-You need a Java 25 JDK, such as [Temurin](https://adoptium.net/). The jar is
-written to `build/libs/`. The first build downloads Minecraft and Fabric, so it
-takes a few minutes.
+You need a Java 21 JDK, such as [Temurin](https://adoptium.net/). The jar is
+written to `build/libs/`. The first build downloads Minecraft and NeoForge, so
+it takes a few minutes.
 
 ## For contributors
 
 - **[MAINTAINING.md](MAINTAINING.md)** explains how every feature works, where
-  its code and data live, and how to update the mod for a new Minecraft
-  version.
-- Before updating, run
-  `python tools/verify_against_minecraft.py <path to minecraft client jar>`.
-  It checks every data file and feature against that version's game files.
+  its code and data live, how this edition maps to the Fabric one, and how to
+  update it.
+- Before updating, run `./gradlew createMinecraftArtifacts`, then
+  `python tools/verify_against_minecraft.py build/moddev/artifacts/neoforge-<version>.jar build/moddev/artifacts/neoforge-<version>-client-extra-aka-minecraft-resources.jar`.
+  It checks every data file and feature against the game's files.
 - Common things to tweak:
   - Affected mobs: `src/main/resources/data/survivaltweaks/tags/entity_type/`
   - Spawn logic: `SpawnRules.java`
   - Bed heal rate: `BedRework.java`
   - Potion stack size: `ItemTweaks.java`
 - **Releasing:** every push is built by GitHub Actions, and the jar appears
-  under the run's *Artifacts*. To publish a release, bump `version=` in
+  under the run's *Artifacts*. To publish a release, bump `mod_version=` in
   `gradle.properties` and push to `main`. The Release workflow then creates the
   `v<version>` tag and a GitHub Release with the jar attached.
 
 Bug reports and suggestions are welcome in
-[Issues](https://github.com/ppcharcoal/survivaltweaks/issues).
+[Issues](https://github.com/ppcharcoal/1.21.11----backport/issues).
 
 ## License
 

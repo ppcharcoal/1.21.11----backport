@@ -21,6 +21,8 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew build --stacktrace
+      - name: In-game tests (GameTest server)
+        run: ./gradlew runGameTestServer --stacktrace
       - uses: actions/upload-artifact@v6
         with:
           name: survivaltweaks-jar

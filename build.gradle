@@ -10,6 +10,15 @@ base {
     archivesName = "${mod_id}-neoforge-${minecraft_version}"
 }
 
+// In-game tests (src/gametest) - a separate test mod that is never part of the
+// released jar. Run them with: ./gradlew runGameTestServer
+sourceSets {
+    gametest {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+
 // Minecraft 1.21.11 runs on Java 21.
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
@@ -21,25 +30,39 @@ neoForge {
         minecraftVersion = project.parchment_minecraft_version
     }
 
+    mods {
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
+        }
+        survivaltweaks_tests {
+            sourceSet(sourceSets.gametest)
+        }
+    }
+
     runs {
         client {
             client()
+            loadedMods = [mods.survivaltweaks]
         }
         server {
             server()
             programArgument '--nogui'
+            loadedMods = [mods.survivaltweaks]
+        }
+        // Starts a server, runs every test in src/gametest, exits (non-zero if any fail).
+        gameTestServer {
+            type = "gameTestServer"
+            sourceSet = sourceSets.gametest
+            loadedMods = [mods.survivaltweaks, mods.survivaltweaks_tests]
+            systemProperty 'neoforge.enabledGameTestNamespaces', 'survivaltweaks_tests'
         }
         configureEach {
             logLevel = org.slf4j.event.Level.INFO
         }
     }
-
-    mods {
-        "${mod_id}" {
-            sourceSet(sourceSets.main)
-        }
-    }
 }
+
+neoForge.addModdingDependenciesTo(sourceSets.gametest)
 
 // Fills in neoforge.mods.toml from gradle.properties.
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
