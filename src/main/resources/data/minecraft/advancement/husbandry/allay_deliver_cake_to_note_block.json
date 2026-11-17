@@ -1,0 +1,8 @@
+{
+  "__comment": "REMOVED by Survival Tweaks: Birthday Song - allays only spawn in outposts/mansions. The condition below is always false, so NeoForge skips this file and the vanilla advancement is not loaded.",
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:never"
+    }
+  ]
+}

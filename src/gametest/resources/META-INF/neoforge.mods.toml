@@ -1,0 +1,17 @@
+# Test-only mod: in-game tests for Survival Tweaks. Never shipped in the release jar.
+modLoader="javafml"
+loaderVersion="[1,)"
+license="MIT"
+
+[[mods]]
+modId="survivaltweaks_tests"
+version="1.0.0"
+displayName="Survival Tweaks - GameTests"
+description='''Automated in-game tests for Survival Tweaks (run with ./gradlew runGameTestServer).'''
+
+[[dependencies.survivaltweaks_tests]]
+    modId="survivaltweaks"
+    type="required"
+    versionRange="[0,)"
+    ordering="AFTER"
+    side="BOTH"

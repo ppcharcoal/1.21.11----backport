@@ -1,0 +1,12 @@
+{
+  "asset_id": "minecraft:entity/cat/persian",
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": "#survivaltweaks:cat_variant/warm"
+      },
+      "priority": 1
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "asset_id": "minecraft:entity/cat/white",
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": "#survivaltweaks:cat_variant/cold"
+      },
+      "priority": 1
+    },
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": "#survivaltweaks:cat_variant/cherry"
+      },
+      "priority": 1
+    },
+    {
+      "priority": 0
+    }
+  ]
+}
