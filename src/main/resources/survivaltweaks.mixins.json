@@ -1,0 +1,19 @@
+{
+  "required": false,
+  "package": "com.survivaltweaks.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "AnvilMenuMixin",
+    "LivingEntityEffectImmunityMixin",
+    "EffectImmunityOverridesMixin",
+    "BossEffectsMixin",
+    "ArrowEffectsAccessor",
+    "PlayerDropEquipmentMixin",
+    "PlayerSleepMixin",
+    "EnchantmentSupportMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}

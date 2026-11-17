@@ -1,0 +1,8 @@
+{
+  "__comment": "REMOVED by Survival Tweaks: Zombie Doctor - needs a zombie villager. The condition below is always false, so NeoForge skips this file and the vanilla advancement is not loaded.",
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:never"
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:book",
+          "weight": 4,
+          "functions": [
+            {
+              "enchantments": {
+                "minecraft:blast_protection": 2
+              },
+              "function": "minecraft:set_enchantments"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:book",
+          "weight": 2,
+          "functions": [
+            {
+              "enchantments": {
+                "minecraft:blast_protection": 3
+              },
+              "function": "minecraft:set_enchantments"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:book",
+          "weight": 4,
+          "functions": [
+            {
+              "enchantments": {
+                "minecraft:protection": 2
+              },
+              "function": "minecraft:set_enchantments"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:book",
+          "weight": 3,
+          "functions": [
+            {
+              "enchantments": {
+                "minecraft:smite": 2
+              },
+              "function": "minecraft:set_enchantments"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:book",
+          "weight": 2,
+          "functions": [
+            {
+              "enchantments": {
+                "minecraft:smite": 3
+              },
+              "function": "minecraft:set_enchantments"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:book",
+          "weight": 3,
+          "functions": [
+            {
+              "enchantments": {
+                "minecraft:sharpness": 2
+              },
+              "function": "minecraft:set_enchantments"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:book",
+          "weight": 2,
+          "functions": [
+            {
+              "enchantments": {
+                "minecraft:bane_of_arthropods": 3
+              },
+              "function": "minecraft:set_enchantments"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:empty",
+          "weight": 20
+        }
+      ]
+    }
+  ]
+}
